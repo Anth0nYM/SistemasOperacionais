@@ -23,21 +23,31 @@ def exibirListaDeProcessos():
     print('\n',listaDeExecucao[0],'\n',listaDeExecucao[1],'\n',listaDeExecucao[2],'\n',listaDeExecucao[3],'\n',listaDeExecucao[4])
     print('_'*155)
 
-
 def verificacaoDeParada():
     if  listaDeExecucao[0].status == 'finalizado' and listaDeExecucao[1].status == 'finalizado' and listaDeExecucao[2].status=='finalizado' and listaDeExecucao[3].status == 'finalizado'and listaDeExecucao[4].status == 'finalizado':
         return True
     else:
         return False
     
-
+def aumentarPrioridade():
+    for p in range(5):
+                    if listaDeExecucao[p].ID != listaDeExecucao[i].ID and listaDeExecucao[p].status != 'bloqueado' and listaDeExecucao[p].status != 'finalizado':
+                        listaDeExecucao[p].prioridade += 1
+ 
+def verificacaoDeStatus():
+    for i in range(5):
+        if listaDeExecucao[i].status == 'bloqueado':
+            listaDeExecucao[i].status = 'pronto'
+        elif listaDeExecucao[i].status == 'finalizado':
+            continue
+       
 exibirListaDeProcessos()
 limpar = input('\nPressione enter para prosseguir \n>')
 if limpar == '':
     print("\n" * 130)
 
 while verificacaoDeParada() == False:
-    for i in range(0,5):
+    for i in range(5):
         if listaDeExecucao[i].status == 'pronto':
             print('Processo {} está pronto'.format(listaDeExecucao[i].ID))
             time.sleep(2)
@@ -49,9 +59,7 @@ while verificacaoDeParada() == False:
                 listaDeExecucao[i].status = 'bloqueado' 
                 print('Processo {} está bloqueado'.format(listaDeExecucao[i].ID))
                 time.sleep(2)
-                for p in range(5):
-                    if listaDeExecucao[p].ID != listaDeExecucao[i].ID and listaDeExecucao[p].status != 'bloqueado' and listaDeExecucao[p].status != 'finalizado':
-                        listaDeExecucao[p].prioridade += 1
+                aumentarPrioridade()
                 listaDeExecucao = organizar(listaDeExecucao)
                 print('Seu processo foi bloqueado')
                 time.sleep(2)
@@ -62,16 +70,10 @@ while verificacaoDeParada() == False:
             else:
                 listaDeExecucao[i].status = 'finalizado'
                 print('Processo {} está finalizado'.format(listaDeExecucao[i].ID))
-                for p in range(5):
-                    if listaDeExecucao[p].ID != listaDeExecucao[i].ID and listaDeExecucao[p].status != 'bloqueado' and listaDeExecucao[p].status != 'finalizado':
-                        listaDeExecucao[p].prioridade += 1
+                aumentarPrioridade()
                 time.sleep(2)
                 print("\n" * 130)
                 exibirListaDeProcessos() 
                 input('\nPressione enter para prosseguir \n>')
-    for i in range(0,5):
-        if listaDeExecucao[i].status == 'bloqueado':
-            listaDeExecucao[i].status = 'pronto'
-        elif listaDeExecucao[i].status == 'finalizado':
-            continue
+    verificacaoDeStatus()
     exibirListaDeProcessos()   
