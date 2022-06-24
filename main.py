@@ -9,15 +9,11 @@ class Processo:
     def __str__(self):
         return f'ID: {self.ID}, prioridade: {self.prioridade}, tempo de execucao: {self.tempo_execucao}, status: {self.status}'
 
-processos = [Processo(i) for i in range(5)] 
-
 def organizar(processos):
     processos.sort(reverse = True,key = lambda x: x.prioridade)
     return processos
 
-listaDeExecucao = organizar(processos)
-
-def exibirListaDeProcessos():
+def exibirListaDeExecucao():
     print('_'*155)
     print('LISTA DE EXECUCAO:')
     print('\n',listaDeExecucao[0],'\n',listaDeExecucao[1],'\n',listaDeExecucao[2],'\n',listaDeExecucao[3],'\n',listaDeExecucao[4])
@@ -40,8 +36,10 @@ def verificacaoDeStatus():
             listaDeExecucao[i].status = 'pronto'
         elif listaDeExecucao[i].status == 'finalizado':
             continue
-       
-exibirListaDeProcessos()
+
+processos = [Processo(i) for i in range(5)] 
+listaDeExecucao = organizar(processos)
+exibirListaDeExecucao()
 limpar = input('\nPressione enter para prosseguir \n>')
 if limpar == '':
     print("\n" * 130)
@@ -64,7 +62,7 @@ while verificacaoDeParada() == False:
                 print('Seu processo foi bloqueado')
                 time.sleep(2)
                 print("\n" * 130) 
-                exibirListaDeProcessos()
+                exibirListaDeExecucao()
                 input('\nPressione enter para prosseguir \n>')
                 time.sleep(2)
             else:
@@ -73,7 +71,7 @@ while verificacaoDeParada() == False:
                 aumentarPrioridade()
                 time.sleep(2)
                 print("\n" * 130)
-                exibirListaDeProcessos() 
+                exibirListaDeExecucao() 
                 input('\nPressione enter para prosseguir \n>')
     verificacaoDeStatus()
-    exibirListaDeProcessos()   
+    exibirListaDeExecucao()   
