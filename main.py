@@ -32,7 +32,7 @@ def verificacaoDeParada():
     
 
 exibirListaDeProcessos()
-limpar = input('\n\nPressione enter para continuar')
+limpar = input('\nPressione enter para prosseguir \n>')
 if limpar == '':
     print("\n" * 130)
 
@@ -49,30 +49,29 @@ while verificacaoDeParada() == False:
                 listaDeExecucao[i].status = 'bloqueado' 
                 print('Processo {} está bloqueado'.format(listaDeExecucao[i].ID))
                 time.sleep(2)
-                listaDeExecucao[i].prioridade = 1
+                for p in range(5):
+                    if listaDeExecucao[p].ID != listaDeExecucao[i].ID and listaDeExecucao[p].status != 'bloqueado' and listaDeExecucao[p].status != 'finalizado':
+                        listaDeExecucao[p].prioridade += 1
                 listaDeExecucao = organizar(listaDeExecucao)
-                print('Seu processo foi bloqueado e foi colocado no fim da fila')
+                print('Seu processo foi bloqueado')
                 time.sleep(2)
                 print("\n" * 130) 
                 exibirListaDeProcessos()
+                input('\nPressione enter para prosseguir \n>')
                 time.sleep(2)
             else:
                 listaDeExecucao[i].status = 'finalizado'
                 print('Processo {} está finalizado'.format(listaDeExecucao[i].ID))
+                for p in range(5):
+                    if listaDeExecucao[p].ID != listaDeExecucao[i].ID and listaDeExecucao[p].status != 'bloqueado' and listaDeExecucao[p].status != 'finalizado':
+                        listaDeExecucao[p].prioridade += 1
                 time.sleep(2)
                 print("\n" * 130)
                 exibirListaDeProcessos() 
-        elif listaDeExecucao[i].status == 'bloqueado':
+                input('\nPressione enter para prosseguir \n>')
+    for i in range(0,5):
+        if listaDeExecucao[i].status == 'bloqueado':
             listaDeExecucao[i].status = 'pronto'
         elif listaDeExecucao[i].status == 'finalizado':
             continue
     exibirListaDeProcessos()   
-        
-            
-        
-
-
-
-
-
-
